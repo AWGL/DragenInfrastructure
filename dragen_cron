@@ -5,7 +5,7 @@ set -euo pipefail
 # Author: Christopher Medway
 # Date: 15/10/2019
 version="1.0.0"
-dragenqc_version="0.0.1"
+dragenqc_version="1.0.0"
 
 function processJobs {
     echo "checking for jobs in $1 ..."
