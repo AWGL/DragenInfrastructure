@@ -35,9 +35,10 @@ for path in $(find "$dragen_results_dir" -maxdepth 3 -mindepth 3 -type f -name "
 
 
   mkdir -p "$dragen_temp_dir"/"$runid"/"$panel"/results
-  
-  source /home/transfer/miniconda3/bin/activate $post_processing_pipeline
 
+  set +u
+  source /home/transfer/miniconda3/bin/activate $post_processing_pipeline
+  set -u
 
   # run nextflow
   nextflow -C \
@@ -51,6 +52,8 @@ for path in $(find "$dragen_results_dir" -maxdepth 3 -mindepth 3 -type f -name "
   --publish_dir "$dragen_temp_dir"/"$runid"/"$panel"/results \
   --sequencing_run "$runid" \
   -work-dir "$dragen_temp_dir"/"$runid"/"$panel"/work &> "$dragen_temp_dir"/"$runid"/"$panel"/results/pipeline.log 
+
+  touch "$dragen_temp_dir"/"$runid"/"$panel"/results/post_processing_finished.txt
   
   mv "$dragen_temp_dir"/"$runid"/"$panel"/results "$dragen_results_dir"/"$runid"/"$panel"/
 
