@@ -10,7 +10,7 @@ dragen_temp_dir=/share/data/results/dragen_temp/
 
 # loop through each folder and find runs which have finished the dragen side of stuff
 
-for path in $(find "$dragen_results_dir" -maxdepth 3 -mindepth 3 -type f -name "dragen_complete.txt" -exec dirname '{}' \;); do
+for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f -name "dragen_complete.txt" -exec dirname '{}' \;); do
 
   # for each of those runs find the post processing pipeline we need
   echo $path
