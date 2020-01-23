@@ -21,7 +21,8 @@ for path in $(find /data/raw/novaseq -maxdepth 2 -mindepth 2 -type f -name "RTAC
     then
 
     echo "It's Hiseq!"
-    mv $path /data/archive/hiseq  
+    mv $path /data/archive/hiseq
+    touch /data/archive/hiseq/"$runid"/run_copy_complete.txt
     chown -R transfer /data/archive/hiseq/"$runid"
     chgrp -R transfer /data/archive/hiseq/"$runid"
     chmod -R 755 /data/archive/hiseq/"$runid"
@@ -31,6 +32,7 @@ for path in $(find /data/raw/novaseq -maxdepth 2 -mindepth 2 -type f -name "RTAC
 
     echo "It's Miseq!"
     mv $path /data/archive/miseq
+    touch /data/archive/hiseq/"$runid"/run_copy_complete.txt
     chown -R transfer /data/archive/miseq/"$runid"
     chgrp -R transfer /data/archive/miseq/"$runid"
     chmod -R 755 /data/archive/miseq/"$runid"
@@ -39,7 +41,8 @@ for path in $(find /data/raw/novaseq -maxdepth 2 -mindepth 2 -type f -name "RTAC
     then
 
     echo "It's Novaseq!"
-    mv $path /data/archive/novaseq/BCL   
+    mv $path /data/archive/novaseq/BCL
+    touch /data/archive/novaseq/BCL/"$runid"/run_copy_complete.txt   
     chown -R transfer /data/archive/novaseq/BCL/"$runid"
     chgrp -R transfer /data/archive/novaseq/BCL/"$runid"
     chmod -R 755 /data/archive/novaseq/BCL/"$runid"
@@ -50,6 +53,7 @@ for path in $(find /data/raw/novaseq -maxdepth 2 -mindepth 2 -type f -name "RTAC
 
    echo "It's Nextseq!"
    mv $path /data/archive/nextseq/
+   touch /data/archive/hiseq/"$runid"/run_copy_complete.txt
    chown -R transfer /data/archive/nextseq/"$runid"
    chgrp -R transfer /data/archive/nextseq/"$runid"
    chmod -R 755 /data/archive/nextseq/"$runid"
