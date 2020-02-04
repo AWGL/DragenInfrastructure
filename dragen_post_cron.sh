@@ -47,6 +47,9 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
   cp /data/diagnostics/pipelines/"$post_processing_pipeline"/"$post_processing_pipeline"-"$post_processing_pipeline_version"/"$post_processing_pipeline".nf \
   "$dragen_temp_dir"/"$runid"/"$panel"/
 
+  cp -r /data/diagnostics/pipelines/"$post_processing_pipeline"/"$post_processing_pipeline"-"$post_processing_pipeline_version"/bin "$dragen_temp_dir"/"$runid"/"$panel"/
+
+
   # run nextflow
   nextflow -C \
   "$dragen_temp_dir"/"$runid"/"$panel"/"$panel"_pbs.config \
@@ -67,6 +70,8 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
   mv "$dragen_temp_dir"/"$runid"/"$panel"/results "$dragen_results_dir"/"$runid"/"$panel"/
   mv "$dragen_temp_dir"/"$runid"/"$panel"/*.nf "$dragen_results_dir"/"$runid"/"$panel"/
   mv "$dragen_temp_dir"/"$runid"/"$panel"/*.config "$dragen_results_dir"/"$runid"/"$panel"/
+  mv "$dragen_temp_dir"/"$runid"/"$panel"/bin "$dragen_results_dir"/"$runid"/"$panel"/results
+
 
   # delete work dir
   rm -r "$dragen_temp_dir"/"$runid"/"$panel"/work 
