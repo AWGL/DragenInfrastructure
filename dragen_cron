@@ -16,6 +16,9 @@ function processJobs {
 
             # confirm that run has been detected
             touch "$path"/dragen-detected
+             
+            #remove spaces from sample sheet
+            sed -i 's/ //g' SampleSheet.csv
 
             # extract run info from path
             instrumentType=$(basename $(dirname "$path"))
