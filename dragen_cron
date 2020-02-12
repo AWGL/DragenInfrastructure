@@ -11,21 +11,22 @@ function processJobs {
     echo "checking for jobs in $1 ..."
 
     for path in $(find "$1" -maxdepth 2 -mindepth 2 -type f -name "RTAComplete.txt" -exec dirname '{}' \;); do
-
+         
+        echo $path
         if [ ! -f $path/dragen-detected ]; then
 
             # confirm that run has been detected
             touch "$path"/dragen-detected
-             
+   
             #remove spaces from sample sheet
-            sed -i 's/ //g' SampleSheet.csv
+            sed -i 's/ //g' "$path"/SampleSheet.csv
 
             # extract run info from path
             instrumentType=$(basename $(dirname "$path"))
             run=$(basename "$path")
 
             # log
-	        echo "path: $path" >> "$path"/dragen-detected
+	    echo "path: $path" >> "$path"/dragen-detected
             echo "run: $run" >> "$path"/dragen-detected
             echo "instrumentType: $instrumentType" >> "$path"/dragen-detected
             echo "running DragenQC.sh" >> "$path"/dragen-detected
