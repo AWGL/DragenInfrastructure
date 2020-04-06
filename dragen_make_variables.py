@@ -81,8 +81,8 @@ for row_dict in list_of_row_dicts:
 
 	f = open(outputdir + '/' + sample_id + '.variables', 'w')
 
-	f.write('SampleId=' + str(sample_id) + '\n')
-	f.write('WorkListId=' + str(worksheet) + '\n')
+	f.write('sampleId=' + str(sample_id) + '\n')
+	f.write('worklistId=' + str(worksheet) + '\n')
 	f.write('seqId=' + str(seqid) + '\n')
 
 

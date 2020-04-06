@@ -10,6 +10,10 @@ dragen_temp_dir=/share/data/results/dragen_temp/
 
 # loop through each folder and find runs which have finished the dragen side of stuff
 
+
+
+
+
 for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f -name "dragen_complete.txt" -exec dirname '{}' \;); do
 
   # for each of those runs find the post processing pipeline we need
@@ -48,7 +52,6 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
   "$dragen_temp_dir"/"$runid"/"$panel"/
 
   cp -r /data/diagnostics/pipelines/"$post_processing_pipeline"/"$post_processing_pipeline"-"$post_processing_pipeline_version"/bin "$dragen_temp_dir"/"$runid"/"$panel"/
-
 
   # run nextflow
   nextflow -C \

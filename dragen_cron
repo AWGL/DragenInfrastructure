@@ -12,12 +12,13 @@ function processJobs {
 
     for path in $(find "$1" -maxdepth 2 -mindepth 2 -type f -name "RTAComplete.txt" -exec dirname '{}' \;); do
          
-        echo $path
         if [ ! -f $path/dragen-detected ]; then
 
+            echo "new run to process $path"
+             
             # confirm that run has been detected
             touch "$path"/dragen-detected
-   
+
             #remove spaces from sample sheet
             sed -i 's/ //g' "$path"/SampleSheet.csv
 
@@ -30,12 +31,26 @@ function processJobs {
             echo "run: $run" >> "$path"/dragen-detected
             echo "instrumentType: $instrumentType" >> "$path"/dragen-detected
             echo "running DragenQC.sh" >> "$path"/dragen-detected
-
+            
+            echo "launching pipeline"
             # launch IlluminaQC for demultiplexing and QC
-            bash /data/pipelines/DragenQC/DragenQC-"$dragenqc_version"/DragenQC.sh $path
+            bash /data/pipelines/DragenQC/DragenQC-"$dragenqc_version"/DragenQC.sh $path /staging/data/fastq/"$run"/DragenQC.log  2>&1
 
         fi
     done
 }
 
+dragen_count=$(ps -aux | grep "\/opt/edico/bin/dragen\b" | wc -l)
+
+echo $dragen_count
+
+if [ $dragen_count -gt 1 ]; then
+
+  echo "cant do the dragen yet another process running."
+
+else
+
 processJobs "/mnt/novaseq"
+
+fi
+
