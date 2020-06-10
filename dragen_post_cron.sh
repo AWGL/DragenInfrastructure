@@ -31,6 +31,12 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
   echo $panel
 
   # load the variables file which says which pipeline we need
+  
+  if [ ! -f "$path"/"$panel".variables ]; then
+    echo "variables does not exist"
+    exit 0
+  fi
+
 
   . "$path"/"$panel".variables
 
@@ -53,6 +59,8 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
 
   cp -r /data/diagnostics/pipelines/"$post_processing_pipeline"/"$post_processing_pipeline"-"$post_processing_pipeline_version"/bin "$dragen_temp_dir"/"$runid"/"$panel"/
 
+
+  cd "$dragen_temp_dir"/"$runid"/"$panel"/
   # run nextflow
   nextflow -C \
   "$dragen_temp_dir"/"$runid"/"$panel"/"$panel"_pbs.config \
@@ -60,6 +68,7 @@ for path in $(find /data/results/dragen_results/ -maxdepth 3 -mindepth 3 -type f
   -E \
   "$dragen_temp_dir"/"$runid"/"$panel"/"$post_processing_pipeline".nf \
   --bams "$dragen_results_dir"/"$runid"/"$panel"/\*/\*\{.bam,.bam.bai\} \
+  --worklist_id "$runid" \
   --vcf "$dragen_results_dir"/"$runid"/"$panel"/"$runid"\{.vcf.gz,.vcf.gz.tbi\} \
   --variables "$dragen_results_dir"/"$runid"/"$panel"/\*/\*.variables \
   --publish_dir "$dragen_temp_dir"/"$runid"/"$panel"/results \

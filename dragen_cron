@@ -5,7 +5,7 @@ set -euo pipefail
 # Author: Christopher Medway
 # Date: 15/10/2019
 version="1.0.0"
-dragenqc_version="0.0.1"
+dragenqc_version="2.0.0"
 
 function processJobs {
     echo "checking for jobs in $1 ..."
@@ -34,7 +34,8 @@ function processJobs {
             
             echo "launching pipeline"
             # launch IlluminaQC for demultiplexing and QC
-            bash /data/pipelines/DragenQC/DragenQC-"$dragenqc_version"/DragenQC.sh $path /staging/data/fastq/"$run"/DragenQC.log  2>&1
+            bash /data/pipelines/DragenQC/DragenQC-2.0.0/DragenQC.sh $path > /staging/data/tmp/"$run"-DragenQC.log  2>&1
+            mv /staging/data/tmp/"$run"-DragenQC.log /mnt/novaseq-archive-fastq/"$run"
 
         fi
     done
